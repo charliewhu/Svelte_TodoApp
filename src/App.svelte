@@ -1,6 +1,7 @@
 <script>
 	import Header from './components/Header.svelte';
 	import Tabs from './shared/Tabs.svelte';
+	import TodoCreateForm from './components/TodoCreateForm.svelte';
 
 	let tabs = ['Todo List', 'Add Todo'];
 	let activeTab = 'Todo List';
@@ -21,7 +22,7 @@
 	{#if activeTab === 'Todo List'}
 		<p>TodoList</p>
 	{:else if activeTab === 'Add Todo'}
-		<p>TodoCreateForm</p>
+		<TodoCreateForm />
 	{/if}
 </main>
 
