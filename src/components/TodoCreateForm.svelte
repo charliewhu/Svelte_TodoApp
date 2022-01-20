@@ -17,7 +17,7 @@
         }
 
         if (valid) {
-            let todo = {...fields, completed: 0}
+            let todo = {...fields, completed: false}
             dispatch('create', todo)
         }
     }

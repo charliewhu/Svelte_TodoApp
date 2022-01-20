@@ -15,13 +15,13 @@
 	let todos = [
 		{ 
 			id: 1, 
-			text: 'Todo1', 
-			completed: 'false'
+			text: 'Todo1',
+			completed: false
 		},
 		{ 
 			id: 2, 
 			text: 'Todo2', 
-			completed: 'false'
+			completed: true
 		}
 	]
 

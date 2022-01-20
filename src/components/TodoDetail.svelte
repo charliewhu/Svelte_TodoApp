@@ -3,7 +3,7 @@
 </script>
 
 
-<div class="todo">
+<div class="todo" class:completed={todo.completed}>
     <h4>{ todo.text }</h4>
 </div>
 
@@ -13,5 +13,8 @@
         padding: 10px;
         border-radius: 6px;
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .completed{
+        text-decoration: line-through;
     }
 </style>
