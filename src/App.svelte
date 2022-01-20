@@ -11,6 +11,20 @@
 		activeTab = e.detail; 
 	}
 
+	let todos = [
+		{ 
+			id: 1, 
+			text: 'Todo1', 
+			completed: 'false'
+		}
+	]
+
+	const handleCreate = (e) => {
+		const todo = e.detail;
+		todos = [todo, ...todos];
+		activeTab = 'Todo List';
+	}
+
 	
 </script>
 
@@ -22,13 +36,9 @@
 	{#if activeTab === 'Todo List'}
 		<p>TodoList</p>
 	{:else if activeTab === 'Add Todo'}
-		<TodoCreateForm />
+		<TodoCreateForm on:create={handleCreate}/>
 	{/if}
 </main>
-
-
-
-
 
 
 
