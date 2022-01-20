@@ -2,6 +2,7 @@
 	import Header from './components/Header.svelte';
 	import Tabs from './shared/Tabs.svelte';
 	import TodoCreateForm from './components/TodoCreateForm.svelte';
+	import TodoList from './components/TodoList.svelte';
 
 	let tabs = ['Todo List', 'Add Todo'];
 	let activeTab = 'Todo List';
@@ -15,6 +16,11 @@
 		{ 
 			id: 1, 
 			text: 'Todo1', 
+			completed: 'false'
+		},
+		{ 
+			id: 2, 
+			text: 'Todo2', 
 			completed: 'false'
 		}
 	]
@@ -34,7 +40,7 @@
 	<Header/>
 	<Tabs on:tabChange={tabChange} {activeTab} {tabs}/>
 	{#if activeTab === 'Todo List'}
-		<p>TodoList</p>
+		<TodoList {todos} />
 	{:else if activeTab === 'Add Todo'}
 		<TodoCreateForm on:create={handleCreate}/>
 	{/if}
