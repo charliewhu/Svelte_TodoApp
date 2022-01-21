@@ -1,11 +1,17 @@
 <script>
+    import {deleteTodo} from '../stores/TodoStore';
+    import Button from '../shared/Button.svelte';
     export let todo;
 </script>
 
 
-<div class="todo" class:completed={todo.completed}>
-    <h4>{ todo.text }</h4>
+<div class="todo" >
+    <h4 class:completed={todo.completed}>{ todo.text }</h4>
+    <!-- <input type="checkbox" checked={todo.completed}> -->
+    <button>Complete?</button>
+    <button type="button" on:click={() => deleteTodo(todo.id)}>Delete</button>
 </div>
+
 
 
 <style>

@@ -17,7 +17,6 @@
 		activeTab = 'Todo List';
 	}
 
-
 </script>
 
 
