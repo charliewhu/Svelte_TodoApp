@@ -19,33 +19,61 @@ loadTodos();
 
 export const createTodo = (newTodo) => {
 
-	let newTodoJson = JSON.stringify(newTodo);
+	let body = JSON.stringify(newTodo);
 
 	fetch(url, {
 		method: 'POST',
-		mode: 'cors',
 		headers: headers,
-		body: newTodoJson
+		body: body
 	})
 	.then(res => res.json())
-	.then(data => todos.update((currentTodos) => {
-        const newTodos = [data, ...currentTodos];
-        return newTodos;
+	.then(
+		data => todos.update((currentTodos) => {
+			const newTodos = [data, ...currentTodos];
+			return newTodos;
     }));
 }
 
 
 export const deleteTodo = (id) => {
 
-	let deleteUrl = url + id
+	let deleteUrl = url + id + '/'
 
 	fetch(deleteUrl, {
 		method: 'DELETE',
-		mode: 'cors',
 		headers: headers,
 	});
 
-    todos.update(todos => todos.filter(todo => todo.id !== id));
+    todos.update(
+		todos => todos.filter(todo => todo.id !== id)
+	);
+}
+
+
+export const updateTodo = (id, text, completed) => {
+	console.log(id);
+	console.log(completed);
+
+	let body = JSON.stringify({
+		'id': id,
+		'text': text,
+		'completed': !completed
+	});
+
+	let updateUrl = url + id + '/'
+
+	fetch(updateUrl, {
+		method: 'PATCH',
+		headers: headers,
+		body: body
+	});
+
+	todos.update(todos => {
+		let newTodos = [...todos];
+		let changedTodo = newTodos.find(todo => todo.id === id);
+		changedTodo.completed = !completed;
+		return newTodos;
+	});
 }
 
 
