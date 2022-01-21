@@ -8,7 +8,7 @@
 <div class="todo" >
     <h4 class:completed={todo.completed}>{ todo.text }</h4>
     <!-- <input type="checkbox" checked={todo.completed}> -->
-    <button type="button" on:click={() => updateTodo(todo.id, todo.text, todo.completed)}>Complete?</button>
+    <button type="button" on:click={() => updateTodo(todo.id, todo.completed)}>Complete?</button>
     <button type="button" on:click={() => deleteTodo(todo.id)}>Delete</button>
 </div>
 

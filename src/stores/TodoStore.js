@@ -16,9 +16,7 @@ export const loadTodos = async () => {
 
 loadTodos();
 
-
 export const createTodo = (newTodo) => {
-
 	let body = JSON.stringify(newTodo);
 
 	fetch(url, {
@@ -34,9 +32,7 @@ export const createTodo = (newTodo) => {
     }));
 }
 
-
 export const deleteTodo = (id) => {
-
 	let deleteUrl = url + id + '/'
 
 	fetch(deleteUrl, {
@@ -49,12 +45,9 @@ export const deleteTodo = (id) => {
 	);
 }
 
-
-export const updateTodo = (id, text, completed) => {
-
+export const updateTodo = (id, completed) => {
 	let body = JSON.stringify({
 		'id': id,
-		'text': text,
 		'completed': !completed
 	});
 
