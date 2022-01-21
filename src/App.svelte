@@ -12,26 +12,12 @@
 		activeTab = e.detail; 
 	}
 
-	let todos = [
-		{ 
-			id: 1, 
-			text: 'Todo1',
-			completed: false
-		},
-		{ 
-			id: 2, 
-			text: 'Todo2', 
-			completed: true
-		}
-	]
-
 	const handleCreate = (e) => {
 		const todo = e.detail;
 		todos = [todo, ...todos];
 		activeTab = 'Todo List';
 	}
 
-	
 </script>
 
 
@@ -40,7 +26,7 @@
 	<Header/>
 	<Tabs on:tabChange={tabChange} {activeTab} {tabs}/>
 	{#if activeTab === 'Todo List'}
-		<TodoList {todos} />
+		<TodoList/>
 	{:else if activeTab === 'Add Todo'}
 		<TodoCreateForm on:create={handleCreate}/>
 	{/if}

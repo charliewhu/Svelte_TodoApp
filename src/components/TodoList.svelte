@@ -1,12 +1,13 @@
 <script>
+    import TodoStore from '../stores/TodoStore.js';
     import TodoDetail from './TodoDetail.svelte';
-    export let todos = [];
+
 </script>
 
 
 
 <div class="todo-list">
-    {#each todos as todo (todo.id)}
+    {#each $TodoStore as todo (todo.id)}
         <div>
             <TodoDetail {todo} />
         </div>
