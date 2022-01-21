@@ -6,6 +6,7 @@
     export let activeTab;
 </script>
 
+
 <div class="tabs">
     <ul>
         {#each tabs as tab}

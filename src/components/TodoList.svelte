@@ -5,7 +5,6 @@
 </script>
 
 
-
 <div class="todo-list">
     {#each $todos as todo (todo.id)}
         <div>

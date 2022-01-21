@@ -20,7 +20,6 @@
 </script>
 
 
-
 <main>
 	<Header/>
 	<Tabs on:tabChange={tabChange} {activeTab} {tabs}/>
@@ -30,7 +29,6 @@
 		<TodoCreateForm on:create={handleCreate}/>
 	{/if}
 </main>
-
 
 
 <style>
