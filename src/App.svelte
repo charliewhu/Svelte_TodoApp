@@ -5,8 +5,8 @@
 	import TodoList from './components/TodoList.svelte';
 	
 
-	let tabs = ['Todo List', 'Add Todo'];
-	let activeTab = 'Todo List';
+	let tabs = ['To-Do List', 'Add To-Do'];
+	let activeTab = 'To-Do List';
 
 	const tabChange = (e) => {
 		// sets tab as activeTab when clicked on
@@ -14,7 +14,7 @@
 	}
 
 	const handleCreate = (e) => {
-		activeTab = 'Todo List';
+		activeTab = 'To-Do List';
 	}
 
 </script>
@@ -24,9 +24,9 @@
 <main>
 	<Header/>
 	<Tabs on:tabChange={tabChange} {activeTab} {tabs}/>
-	{#if activeTab === 'Todo List'}
+	{#if activeTab === 'To-Do List'}
 		<TodoList/>
-	{:else if activeTab === 'Add Todo'}
+	{:else if activeTab === 'Add To-Do'}
 		<TodoCreateForm on:create={handleCreate}/>
 	{/if}
 </main>

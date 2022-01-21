@@ -1,6 +1,6 @@
 <header>
     <h1>
-        Todo List
+        To-Do List
     </h1>
 </header>
 

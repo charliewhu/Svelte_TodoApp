@@ -51,8 +51,6 @@ export const deleteTodo = (id) => {
 
 
 export const updateTodo = (id, text, completed) => {
-	console.log(id);
-	console.log(completed);
 
 	let body = JSON.stringify({
 		'id': id,
