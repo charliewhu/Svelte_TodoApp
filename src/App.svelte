@@ -3,6 +3,7 @@
 	import Tabs from './shared/Tabs.svelte';
 	import TodoCreateForm from './components/TodoCreateForm.svelte';
 	import TodoList from './components/TodoList.svelte';
+	
 
 	let tabs = ['Todo List', 'Add Todo'];
 	let activeTab = 'Todo List';
@@ -13,10 +14,9 @@
 	}
 
 	const handleCreate = (e) => {
-		const todo = e.detail;
-		todos = [todo, ...todos];
 		activeTab = 'Todo List';
 	}
+
 
 </script>
 

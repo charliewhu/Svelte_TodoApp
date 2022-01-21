@@ -1,6 +1,7 @@
 import {writable} from 'svelte/store';
 
-const TodoStore = writable(
+
+export const todos = writable(
     [
 		{ 
 			id: 1, 
@@ -16,6 +17,16 @@ const TodoStore = writable(
 );
 
 
+export const createTodo = (newTodo) => {
+    todos.update((currentTodos) => {
+        const newTodos = [newTodo, ...currentTodos];
+        return newTodos;
+    })
+}
 
 
-export default TodoStore;
+export const deleteTodo = (id) => {
+    todos.update(todos => todos.filter(todo => todo.id !== id));
+}
+
+

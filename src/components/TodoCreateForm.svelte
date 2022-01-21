@@ -1,6 +1,7 @@
 <script>
     import { createEventDispatcher } from 'svelte';
     import Button from '../shared/Button.svelte';
+    import {createTodo} from '../stores/TodoStore.js';
 
     let dispatch = createEventDispatcher();
     let fields = {text: ''};
@@ -17,8 +18,11 @@
         }
 
         if (valid) {
-            let todo = {...fields, completed: false}
-            dispatch('create', todo)
+            let todo = {id: Date.now(), text: fields.text, completed: false};
+            createTodo(todo);
+            todo = '';
+            console.log('submitting');
+            dispatch('create');
         }
     }
 </script>
