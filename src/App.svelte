@@ -48,9 +48,6 @@
 
 
 
-
-
-
 <style>
 	main {
 		text-align: center;

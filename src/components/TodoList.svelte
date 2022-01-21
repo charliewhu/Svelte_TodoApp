@@ -18,5 +18,7 @@
     .todo-list {
         display: grid;
         grid-gap: 20px;
+        max-width: 400px;
+        margin: 0 auto;
     }
 </style>
