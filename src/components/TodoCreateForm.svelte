@@ -10,7 +10,7 @@
 
     const submitHandler = () => {
         valid = true;
-        
+
         //validate new Todo is not blank
         if (fields.text.trim().length < 1){
             valid = false;
@@ -20,7 +20,7 @@
         }
 
         if (valid) {
-            let todo = {id: Date.now(), text: fields.text, completed: false}; //get form data
+            let todo = {text: fields.text, completed: false}; //get form data
             createTodo(todo); //send form data to store/create function
             dispatch('create'); //tell App.svelte to change activeTab
         }
