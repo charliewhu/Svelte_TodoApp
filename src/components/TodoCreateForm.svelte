@@ -20,7 +20,7 @@
         }
 
         if (valid) {
-            let todo = {text: fields.text, completed: false}; //get form data
+            let todo = fields.text; //get form data
             createTodo(todo); //send form data to store/create function
             dispatch('create'); //tell App.svelte to change activeTab
         }

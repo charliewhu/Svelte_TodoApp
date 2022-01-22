@@ -1,4 +1,5 @@
 import {writable} from 'svelte/store';
+import axios from 'axios';
 
 const url = 'http://127.0.0.1:8000/';
 const headers = { 
@@ -6,65 +7,58 @@ const headers = {
 	'Content-Type': 'application/json'
 };
 
+const config = {'headers':headers};
+
+axios.defaults.headers.common['header1'];
+
 export let todos = writable([]);
 
 export const loadTodos = async () => {
-	fetch(url)
-	.then(res => res.json())
-	.then(data => todos.set(data));
-}
+
+	const response = await axios.get(url); //GET todoList
+	todos.set(response.data); //set todoList in Store
+
+};
 
 loadTodos();
 
-export const createTodo = (newTodo) => {
-	let body = JSON.stringify(newTodo);
+export const createTodo = async (todoText) => {
+	const todo = {'text': todoText}
+	const body = JSON.stringify(todo);
 
-	fetch(url, {
-		method: 'POST',
-		headers: headers,
-		body: body
-	})
-	.then(res => res.json())
-	.then(
-		data => todos.update((currentTodos) => {
-			const newTodos = [data, ...currentTodos];
+	const response = await axios.post(url, body, config) //POST new todo
+	todos.update(
+		(currentTodos) => { //take current Store todos and add the new one
+			const newTodos = [response.data, ...currentTodos];
 			return newTodos;
-    }));
-}
+	});
+
+};
 
 export const deleteTodo = (id) => {
-	let deleteUrl = url + id + '/'
+	const deleteUrl = url + id;
 
-	fetch(deleteUrl, {
-		method: 'DELETE',
-		headers: headers,
-	});
+	axios.delete(deleteUrl, config);
 
     todos.update(
 		todos => todos.filter(todo => todo.id !== id)
 	);
-}
+};
 
 export const updateTodo = (id, completed) => {
-	let body = JSON.stringify({
+	const body = JSON.stringify({
 		'id': id,
 		'completed': !completed
 	});
 
-	let updateUrl = url + id + '/'
+	const updateUrl = url + id + '/';
 
-	fetch(updateUrl, {
-		method: 'PATCH',
-		headers: headers,
-		body: body
-	});
+	axios.patch(updateUrl, body, config);
 
 	todos.update(todos => {
-		let newTodos = [...todos];
-		let changedTodo = newTodos.find(todo => todo.id === id);
+		const newTodos = [...todos];
+		const changedTodo = newTodos.find(todo => todo.id === id);
 		changedTodo.completed = !completed;
 		return newTodos;
 	});
-}
-
-
+};
