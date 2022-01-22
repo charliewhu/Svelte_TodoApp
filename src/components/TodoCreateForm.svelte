@@ -3,9 +3,9 @@
     import Button from '../shared/Button.svelte';
     import {createTodo} from '../stores/TodoStore.js';
 
-    let dispatch = createEventDispatcher();
-    let fields = {text: ''};
-    let errors = {todo: ''};
+    let dispatch = createEventDispatcher(); //dispatcher for activeTab
+    let fields = {text: ''}; 
+    let errors = {todo: ''}; 
     let valid = false;
 
     const submitHandler = () => {

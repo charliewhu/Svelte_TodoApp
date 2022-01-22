@@ -8,15 +8,15 @@ const headers = {
 };
 
 const config = {'headers':headers};
-
 axios.defaults.headers.common['header1'];
 
 export let todos = writable([]);
 
 export const loadTodos = async () => {
 
-	const response = await axios.get(url); //GET todoList
-	todos.set(response.data); //set todoList in Store
+	axios.get(url) //GET todoList
+	.then(response => {todos.set(response.data)})
+	.catch(err => console.log(err.response.status, err.message)); //set todoList in Store
 
 };
 
@@ -26,11 +26,11 @@ export const createTodo = async (todoText) => {
 	const todo = {'text': todoText}
 	const body = JSON.stringify(todo);
 
-	const response = await axios.post(url, body, config) //POST new todo
-	todos.update(
-		(currentTodos) => { //take current Store todos and add the new one
-			const newTodos = [response.data, ...currentTodos];
-			return newTodos;
+	axios.post(url, body, config) //POST new todo
+	.then(response => {
+		todos.update((currentTodos) => { //take current Store todos and add the new one
+			return [response.data, ...currentTodos];
+		})
 	});
 
 };
@@ -38,7 +38,7 @@ export const createTodo = async (todoText) => {
 export const deleteTodo = (id) => {
 	const deleteUrl = url + id;
 
-	axios.delete(deleteUrl, config);
+	axios.delete(deleteUrl);
 
     todos.update(
 		todos => todos.filter(todo => todo.id !== id)
