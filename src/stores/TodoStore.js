@@ -1,22 +1,35 @@
 import {writable} from 'svelte/store';
-import axios from 'axios';
 
+// API config
+import axios from 'axios';
 const url = 'http://127.0.0.1:8000/';
 const headers = { 
 	'Accept': 'application/json, text/plain',
 	'Content-Type': 'application/json'
 };
-
 const config = {'headers':headers};
-axios.defaults.headers.common['header1'];
+
 
 export let todos = writable([]);
+export let isLoggedIn = writable(false);
+export let loading = writable(true);
+
 
 export const loadTodos = async () => {
-
-	axios.get(url) //GET todoList
-	.then(response => {todos.set(response.data)})
-	.catch(err => console.log(err.response.status, err.message)); //set todoList in Store
+	try {
+		const res = await axios.get(url);
+		todos.set(res.data);
+		isLoggedIn.set(true);
+		loading.set(false);
+	} catch(err) {
+		if (!err.response) {
+			return console.log("Server timed out")  //5** error handle
+		} else if (err.response.data.error == 401) {
+			isLoggedIn = false; // user is not authenticated
+		} else {
+			console.log(err.response.status); // all other errors - HANDLE LATER
+		}
+	}
 
 };
 

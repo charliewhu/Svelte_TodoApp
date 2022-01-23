@@ -1,16 +1,21 @@
 <script>
-    import {todos} from '../stores/TodoStore.js';
+    import {todos, isLoggedIn} from '../stores/TodoStore.js';
     import TodoDetail from './TodoDetail.svelte';
-
 </script>
 
 
 <div class="todo-list">
-    {#each $todos as todo (todo.id)}
-        <div>
-            <TodoDetail {todo} />
-        </div>
-    {/each}
+
+    {#if !$isLoggedIn }
+        <p>Loading....</p>
+    {:else}
+        {#each $todos as todo (todo.id)}
+            <div>
+                <TodoDetail {todo} />
+            </div>
+        {/each}
+    {/if}
+
 </div>
 
 
