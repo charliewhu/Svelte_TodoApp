@@ -1,8 +1,11 @@
 import {writable} from 'svelte/store';
+import Cookies from 'js-cookie';
 
 // API config
 import axios from 'axios';
 const url = 'http://127.0.0.1:8000/';
+const signupUrl = url + 'rest-auth/registration/';
+const loginUrl = url + 'rest-auth/login/';
 const headers = { 
 	'Accept': 'application/json, text/plain',
 	'Content-Type': 'application/json'
@@ -13,6 +16,25 @@ const config = {'headers':headers};
 export let todos = writable([]);
 export let isLoggedIn = writable(false);
 export let loading = writable(true);
+
+
+export const signup = async (username, email, password1, password2) => {
+	try {
+		const user = {
+			'username': username,
+			'email': email,
+			'password1': password1,
+			'password2':password2
+		};
+		const body = JSON.stringify(user);
+		const res = await axios.post(signupUrl, body, config);
+		Cookies.set('token', res.data.key, { secure: true });
+
+	} catch (err) {
+		console.log(err.response);
+	};
+	
+};
 
 
 export const loadTodos = async () => {

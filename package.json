@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "js-cookie": "^3.0.1",
     "sirv-cli": "^2.0.0"
   }
 }

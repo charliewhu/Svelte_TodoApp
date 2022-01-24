@@ -1,7 +1,6 @@
 <script>
     import { createEventDispatcher } from 'svelte';
     import Button from '../../shared/Button.svelte';
-    import {createTodo} from '../../stores/TodoStore.js';
 
     let dispatch = createEventDispatcher(); //dispatcher for activeTab
     let fields = {email: '', password: ''}; 
@@ -20,9 +19,13 @@
         }
 
         // if (valid) {
+
+            // login(fields.email, fields.password); //send form data to Store function
+            // dispatch('logIn'); //tell App.svelte to change activeTab
+
         //     let todo = fields.text; //get form data
         //     createTodo(todo); //send form data to store/create function
-        //     dispatch('logIn'); //tell App.svelte to change activeTab
+        //     dispatch('logIn'); 
         // }
     }
 </script>
@@ -36,7 +39,7 @@
         <input type="password" placeholder="Password..." bind:value={fields.password}>
     </div>
     <div class="error">{ errors }</div>
-    <Button>Add Todo</Button>
+    <Button>Log In</Button>
 </form>
 
 

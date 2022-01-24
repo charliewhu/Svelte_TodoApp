@@ -18,17 +18,21 @@
 	} else {
 		activeTab = 'Log-In';
 		tabs = ['Log-In', 'Sign-Up'];
-	}
+	};
 	
 	const tabChange = (e) => {
 		// sets tab as activeTab when clicked on
 		activeTab = e.detail; 
-	}
+	};
 
 	const handleCreate = (e) => {
 		// after todo is created, flick back to todo list
 		activeTab = 'To-Do List';
-	}
+	};
+
+	const handleSignup = (e) => {
+		activeTab = 'Log-In';
+	};
 
 </script>
 
@@ -42,9 +46,9 @@
 		<Tabs on:tabChange={tabChange} {activeTab} {tabs}/>
 		{#if !$isLoggedIn}
 			{#if activeTab === 'Log-In'}
-				<Login on:logIn={handleCreate}/>
+				<Login/>
 			{:else}
-				<Signup/>
+				<Signup on:signup={handleSignup}/>
 			{/if}
 		{:else}
 			{#if activeTab ===  'To-Do List'}
