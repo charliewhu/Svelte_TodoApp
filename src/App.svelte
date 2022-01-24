@@ -42,7 +42,7 @@
 		<Tabs on:tabChange={tabChange} {activeTab} {tabs}/>
 		{#if !$isLoggedIn}
 			{#if activeTab === 'Log-In'}
-				<Login/>
+				<Login on:logIn={handleCreate}/>
 			{:else}
 				<Signup/>
 			{/if}

@@ -23,9 +23,10 @@ export const loadTodos = async () => {
 		loading.set(false);
 	} catch(err) {
 		if (!err.response) {
-			return console.log("Server timed out")  //5** error handle
-		} else if (err.response.data.error == 401) {
-			isLoggedIn = false; // user is not authenticated
+			return console.log("Server timed out") ; //5** error handle
+		} else if (err.response.status == 401) {
+			isLoggedIn.set(false); // user is not authenticated
+			loading.set(false); 
 		} else {
 			console.log(err.response.status); // all other errors - HANDLE LATER
 		}
