@@ -3,8 +3,11 @@
 	import Tabs from './shared/Tabs.svelte';
 	import TodoCreateForm from './components/TodoCreateForm.svelte';
 	import TodoList from './components/TodoList.svelte';
+	import Login from './components/auth/Login.svelte'
+	import Signup from './components/auth/Signup.svelte'
 	import { isLoggedIn, loading } from './stores/TodoStore.js';
 	
+	// declare variables
 	let tabs;
 	let activeTab;
 
@@ -23,6 +26,7 @@
 	}
 
 	const handleCreate = (e) => {
+		// after todo is created, flick back to todo list
 		activeTab = 'To-Do List';
 	}
 
@@ -32,42 +36,22 @@
 <main>
 	<Header/>
 
-	<!-- 
-		IF $loading 
-			show loading screen
-		ELSE
-			IF !$isLoggedIn
-				IF activeTab === 'Log-In'
-					<Login/>
-				ELSE
-					<Signup/>
-				END IF
-			ELSE
-				IF activeTab === 'To-Do List'
-					<TodoList/>
-				ELSE
-					<TodoCreateForm on:create={handleCreate}/>
-				END IF
-			END IF
-		END IF
-	 -->
-
-	{#if !$isLoggedIn}
-		<Tabs on:tabChange={tabChange} {activeTab} {tabs}/>
-
-		{#if activeTab === 'Log-In'}
-			<TodoList/>       
-		{:else if activeTab === 'Sign-Up'}
-			<TodoCreateForm on:create={handleCreate}/>
-		{/if}
-
+	{#if $loading}
+		<h1>Loading...</h1>
 	{:else}
 		<Tabs on:tabChange={tabChange} {activeTab} {tabs}/>
-
-		{#if activeTab === 'To-Do List'}
-			<TodoList/>
-		{:else if activeTab === 'Add To-Do'}
-			<TodoCreateForm on:create={handleCreate}/>
+		{#if !$isLoggedIn}
+			{#if activeTab === 'Log-In'}
+				<Login/>
+			{:else}
+				<Signup/>
+			{/if}
+		{:else}
+			{#if activeTab ===  'To-Do List'}
+				<TodoList/>       
+			{:else if activeTab === 'Add To-Do'}
+				<TodoCreateForm on:create={handleCreate}/>
+			{/if}
 		{/if}
 	{/if}
 	
