@@ -29,11 +29,12 @@ export let loading = writable(true);
 
 
 const resetAuthHeader = (res) => {
-	//after receiving a new token, reassign the cookie and axio header
+	//after receiving a new token, reassign the Cookie and axios header
 	Cookies.set('token', res.data.key, { secure: true });
 	token = Cookies.get('token') || '';
 	axios.defaults.headers.Authorization = `Token ${token}`;
 }
+
 
 export const signup = async (username, email, password1, password2) => {
 	try {

@@ -6,8 +6,10 @@
 
 <div class="todo-list">
 
-    {#if !$isLoggedIn }
-        <p>Loading....</p>
+
+
+    {#if $todos.length < 1 }
+        <h3>No items yet...</h3>
     {:else}
         {#each $todos as todo (todo.id)}
             <div>
