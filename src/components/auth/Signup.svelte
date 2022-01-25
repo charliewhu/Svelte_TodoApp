@@ -15,6 +15,10 @@
         if ( fields.username.trim().length < 1 || 
             fields.email.trim().length < 1 || 
             fields.password1.length < 1 ){
+
+                // passwords must be the same
+
+
             valid = false;
             errors = 'Fields cannot be blank';
         } else {

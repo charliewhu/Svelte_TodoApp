@@ -1,22 +1,39 @@
 import {writable} from 'svelte/store';
 import Cookies from 'js-cookie';
 
-// API config
+// API Axios config
 import axios from 'axios';
 const url = 'http://127.0.0.1:8000/';
 const signupUrl = url + 'rest-auth/registration/';
 const loginUrl = url + 'rest-auth/login/';
-const headers = { 
+let token = Cookies.get('token') || '';
+
+const removeAuthHeader = {
+	headers: {
+		'Authorization': ''
+	}
+}
+axios.defaults.withCredentials = true;
+axios.defaults.xsrfCookieName = 'csrftoken';
+axios.defaults.xsrfHeaderName = 'X-CSRFToken';
+axios.defaults.headers = {
 	'Accept': 'application/json, text/plain',
+	'Authorization': `Token ${token}`,
 	'Content-Type': 'application/json'
-};
-const config = {'headers':headers};
+}
 
 
 export let todos = writable([]);
 export let isLoggedIn = writable(false);
 export let loading = writable(true);
 
+
+const resetAuthHeader = (res) => {
+	//after receiving a new token, reassign the cookie and axio header
+	Cookies.set('token', res.data.key, { secure: true });
+	token = Cookies.get('token') || '';
+	axios.defaults.headers.Authorization = `Token ${token}`;
+}
 
 export const signup = async (username, email, password1, password2) => {
 	try {
@@ -27,13 +44,29 @@ export const signup = async (username, email, password1, password2) => {
 			'password2':password2
 		};
 		const body = JSON.stringify(user);
-		const res = await axios.post(signupUrl, body, config);
-		Cookies.set('token', res.data.key, { secure: true });
-
+		const res = await axios.post(signupUrl, body, removeAuthHeader);
+		resetAuthHeader(res);
+		loadTodos();
 	} catch (err) {
 		console.log(err.response);
 	};
-	
+};
+
+
+export const login = async (username, password) => {
+	try {
+		const user = {
+			'username': username,
+			'password': password,
+		};
+		const body = JSON.stringify(user);
+		const res = await axios.post(loginUrl, body, removeAuthHeader);
+		resetAuthHeader(res);
+		loadTodos();
+	} catch (err) {
+		console.log(err);
+		console.log(err.response);
+	};
 };
 
 
@@ -45,9 +78,10 @@ export const loadTodos = async () => {
 		loading.set(false);
 	} catch(err) {
 		if (!err.response) {
-			return console.log("Server timed out") ; //5** error handle
+			console.log(err.response);
+			console.log("Server timed out") ; //5** error handle
 		} else if (err.response.status == 401) {
-			isLoggedIn.set(false); // user is not authenticated
+			console.log('Unauthorized')
 			loading.set(false); 
 		} else {
 			console.log(err.response.status); // all other errors - HANDLE LATER
@@ -56,13 +90,15 @@ export const loadTodos = async () => {
 
 };
 
+
 loadTodos();
+
 
 export const createTodo = async (todoText) => {
 	const todo = {'text': todoText}
 	const body = JSON.stringify(todo);
 
-	axios.post(url, body, config) //POST new todo
+	axios.post(url, body) //POST new todo
 	.then(response => {
 		todos.update((currentTodos) => { //take current Store todos and add the new one
 			return [response.data, ...currentTodos];
@@ -70,6 +106,7 @@ export const createTodo = async (todoText) => {
 	});
 
 };
+
 
 export const deleteTodo = (id) => {
 	const deleteUrl = url + id;
@@ -81,6 +118,7 @@ export const deleteTodo = (id) => {
 	);
 };
 
+
 export const updateTodo = (id, completed) => {
 	const body = JSON.stringify({
 		'id': id,
@@ -89,7 +127,7 @@ export const updateTodo = (id, completed) => {
 
 	const updateUrl = url + id + '/';
 
-	axios.patch(updateUrl, body, config);
+	axios.patch(updateUrl, body);
 
 	todos.update(todos => {
 		const newTodos = [...todos];

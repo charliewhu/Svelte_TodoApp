@@ -1,9 +1,10 @@
 <script>
     import { createEventDispatcher } from 'svelte';
     import Button from '../../shared/Button.svelte';
+    import { login } from '../../stores/TodoStore.js';
 
     let dispatch = createEventDispatcher(); //dispatcher for activeTab
-    let fields = {email: '', password: ''}; 
+    let fields = {username: '', password: ''}; 
     let errors = ''; 
     let valid = false;
 
@@ -11,29 +12,24 @@
         valid = true;
 
         //validate login fields are not blank
-        if ( fields.email.trim().length < 1 || fields.password.length < 1 ){
+        if ( fields.username.trim().length < 1 || fields.password.length < 1 ){
             valid = false;
             errors = 'Fields cannot be blank';
         } else {
             errors = '';
         }
 
-        // if (valid) {
-
-            // login(fields.email, fields.password); //send form data to Store function
-            // dispatch('logIn'); //tell App.svelte to change activeTab
-
-        //     let todo = fields.text; //get form data
-        //     createTodo(todo); //send form data to store/create function
-        //     dispatch('logIn'); 
-        // }
+        if (valid) {
+            login(fields.username, fields.password); //send form data to Store function
+            dispatch('logIn'); //tell App.svelte to change activeTab
+        }
     }
 </script>
 
 
 <form on:submit|preventDefault={submitHandler}>
     <div class="form-field">
-        <input type="text" placeholder="Email..." bind:value={fields.email}>
+        <input type="text" placeholder="Username..." bind:value={fields.username}>
     </div>
     <div class="form-field">
         <input type="password" placeholder="Password..." bind:value={fields.password}>
