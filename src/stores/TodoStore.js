@@ -6,6 +6,7 @@ import axios from 'axios';
 const url = 'http://127.0.0.1:8000/';
 const signupUrl = url + 'rest-auth/registration/';
 const loginUrl = url + 'rest-auth/login/';
+const logoutUrl = url + 'rest-auth/logout/';
 let token = Cookies.get('token') || '';
 
 const removeAuthHeader = {
@@ -71,6 +72,13 @@ export const login = async (username, password) => {
 };
 
 
+export const logout = () => {
+	axios.post(logoutUrl);
+	Cookies.remove('token');
+	isLoggedIn.set(false);
+};
+
+
 export const loadTodos = async () => {
 	try {
 		const res = await axios.get(url);
@@ -88,7 +96,6 @@ export const loadTodos = async () => {
 			console.log(err.response.status); // all other errors - HANDLE LATER
 		}
 	}
-
 };
 
 
